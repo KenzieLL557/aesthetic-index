@@ -22,7 +22,7 @@
       vec3 base=vec3(.027,.031,.035);float halo=max(0.,1.-length((px-resolution*.52)/resolution.y));base+=halo*.008;
       if(hasImage<.5){outColor=vec4(base,1.);return;}
       vec3 backdrop=texture(image,coverUv(vUv)).rgb;
-      base=mix(backdrop,base,.90);
+      base=mix(backdrop,base,.95);
       float z=sqrt(max(0.,1.-radial*radial));float fresnel=pow(1.-z,3.2);
       float liquid=(sin(local.y*.052+time*1.1)+sin(local.x*.035-time*.8))*.0018*(1.-z);
       vec2 dir=local/max(length(local),.001);vec2 refractedPx=px-local*(.105*z+.035*fresnel)+dir.yx*liquid*resolution.y*radial;

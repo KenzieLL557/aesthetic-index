@@ -32,7 +32,7 @@ function cover(){const scale=Math.max(width/image.width,height/image.height),w=i
 function background(){ctx.fillStyle='#070809';ctx.fillRect(0,0,width,height);const glow=ctx.createRadialGradient(width*.52,height*.52,0,width*.52,height*.52,Math.max(width,height)*.65);glow.addColorStop(0,'#111315');glow.addColorStop(.5,'#090a0b');glow.addColorStop(1,'#050607');ctx.fillStyle=glow;ctx.fillRect(0,0,width,height)}
 function fallbackLens(){
   background();if(!image?.complete||!image.naturalWidth)return;
-  ctx.save();ctx.globalAlpha=.1;ctx.drawImage(image,...cover());ctx.restore();
+  ctx.save();ctx.globalAlpha=.05;ctx.drawImage(image,...cover());ctx.restore();
   pointer.x+=(pointer.tx-pointer.x)*.12;pointer.y+=(pointer.ty-pointer.y)*.12;
   open+=(targetOpen-open)*(reduced?1:.045);const radius=126+open*Math.max(width,height)*1.25;
   ctx.save();ctx.beginPath();ctx.arc(pointer.x,pointer.y,radius,0,Math.PI*2);ctx.clip();ctx.filter=`brightness(${.96-open*.22}) saturate(1.03) contrast(1.06)`;ctx.drawImage(image,...cover());ctx.restore();
