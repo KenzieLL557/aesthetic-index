@@ -67,6 +67,11 @@ function entryKey(item) { return featuredMeta[item.name]?.key || item.slug; }
 function localUrl(item) { return `style.html?style=${encodeURIComponent(entryKey(item))}`; }
 function sourceUrl(item) { return `https://aesthetics.fandom.com/wiki/${encodeURIComponent(item.slug)}`; }
 function imageSrc(image) { return image.localAvailable ? image.local : image.src; }
+function previewSrc(image) {
+  const source = imageSrc(image);
+  const match = /^images\/detail\/(\d+)\.[a-z0-9]+$/i.exec(source || '');
+  return match ? `images/detail-preview/${match[1]}.webp` : source;
+}
 function imageIdentity(url) { try { return decodeURIComponent(String(url || '').split('/revision/')[0]).toLowerCase(); } catch { return String(url || '').toLowerCase(); } }
 function recentNames() { try { return JSON.parse(localStorage.getItem('atlas-recent') || '[]'); } catch { return []; } }
 function rememberVisit(name) {
@@ -140,7 +145,7 @@ function initCatalog() {
       const cover = record?.images?.[0];
       const thumbnail = item.localThumbnail || (cover ? imageSrc(cover) : item.thumbnail);
       const url = `${localUrl(item)}&return=${encodeURIComponent(returnUrl)}`;
-      return `<article class="catalog-card"><a class="catalog-image" data-catalog-link href="${url}">${thumbnail ? `<img src="${escapeHTML(thumbnail)}" alt="${escapeHTML(item.name)}" loading="lazy">` : `<span class="fallback">${escapeHTML(item.name)}</span>`}</a><div class="catalog-info"><h2><a data-catalog-link href="${url}">${escapeHTML(item.name)}</a></h2>${item.nameZh ? `<div class="catalog-cn">${escapeHTML(item.nameZh)}</div>` : ''}<p>${escapeHTML((item.types || []).join(' · ') || '待分类')}</p><div class="chips">${[...(item.moods || []), ...(item.eras || [])].slice(0, 3).map((tag) => `<span>${escapeHTML(tag)}</span>`).join('')}</div></div></article>`;
+      return `<article class="catalog-card"><a class="catalog-image" data-catalog-link href="${url}">${thumbnail ? `<img src="${escapeHTML(thumbnail)}" alt="${escapeHTML(item.name)}" loading="lazy" decoding="async">` : `<span class="fallback">${escapeHTML(item.name)}</span>`}</a><div class="catalog-info"><h2><a data-catalog-link href="${url}">${escapeHTML(item.name)}</a></h2>${item.nameZh ? `<div class="catalog-cn">${escapeHTML(item.nameZh)}</div>` : ''}<p>${escapeHTML((item.types || []).join(' · ') || '待分类')}</p><div class="chips">${[...(item.moods || []), ...(item.eras || [])].slice(0, 3).map((tag) => `<span>${escapeHTML(tag)}</span>`).join('')}</div></div></article>`;
     }).join('') || '<p class="empty-state">还没有收藏内容。</p>';
     renderPager(totalPages);
     if (!savedView) {
@@ -174,7 +179,7 @@ function addImages() {
   const grid = document.querySelector('#gallery-grid');
   const images = current.images || [];
   const next = images.slice(shown, shown + 24);
-  grid.insertAdjacentHTML('beforeend', next.map((image, index) => `<figure><button class="gallery-image" data-image="${shown + index}"><img src="${escapeHTML(imageSrc(image))}" alt="${escapeHTML(image.caption || current.name)}" loading="lazy" referrerpolicy="no-referrer"></button>${image.caption ? `<figcaption><span>${escapeHTML(image.caption)}</span></figcaption>` : ''}</figure>`).join(''));
+  grid.insertAdjacentHTML('beforeend', next.map((image, index) => `<figure><button class="gallery-image" data-image="${shown + index}"><img src="${escapeHTML(previewSrc(image))}" alt="${escapeHTML(image.caption || current.name)}" loading="lazy" decoding="async" referrerpolicy="no-referrer"></button>${image.caption ? `<figcaption><span>${escapeHTML(image.caption)}</span></figcaption>` : ''}</figure>`).join(''));
   grid.querySelectorAll('img:not([data-error-ready])').forEach((image) => {
     image.dataset.errorReady = 'true';
     const recover = () => {

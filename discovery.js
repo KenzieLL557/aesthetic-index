@@ -8,6 +8,7 @@ const actions=document.querySelector('#resultActions');
 const detailLink=document.querySelector('#detailLink');
 const shuffle=document.querySelector('#shuffle');
 const pointerNode=document.querySelector('#pointer');
+const imageLoader=document.querySelector('#imageLoader');
 const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const items=(window.ATLAS_CATALOG?.items||[]).filter(item=>item.localThumbnail||item.thumbnail);
 
@@ -21,7 +22,7 @@ function choose(){
   if(!items.length)return;
   let index=Math.floor(Math.random()*items.length);
   if(items.length>1&&index===lastIndex)index=(index+1)%items.length;
-  lastIndex=index;current=items[index];image=new Image();image.src=itemImage(current);
+  lastIndex=index;current=items[index];image=new Image();image.decoding='async';document.body.classList.add('image-loading');imageLoader?.setAttribute('aria-label',`正在加载 ${current.name}`);image.onload=()=>{document.body.classList.remove('image-loading');imageLoader?.removeAttribute('aria-label')};image.onerror=()=>document.body.classList.remove('image-loading');image.src=itemImage(current);
   setTitle(current.name);titleZh.textContent=current.nameZh||'';
   detailLink.href=`style.html?style=${encodeURIComponent(current.slug)}`;
   window.lensGL?.setImage(itemImage(current));

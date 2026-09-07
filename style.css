@@ -53,3 +53,10 @@
 
 .detail-cn + .detail-tags{margin-top:20px}
 .mark-inline>span{display:none}
+
+.catalog-image,.gallery-image{position:relative;overflow:hidden;background:#e1e3de}
+.catalog-image::before,.gallery-image::before{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.5) 48%,transparent 61%);transform:translateX(-100%);animation:image-skeleton 1.35s cubic-bezier(.4,0,.2,1) infinite}
+.catalog-image img,.gallery-image img{position:relative;z-index:1;background:#e1e3de}
+.catalog-card{content-visibility:auto;contain-intrinsic-size:310px}
+@keyframes image-skeleton{to{transform:translateX(100%)}}
+@media(prefers-reduced-motion:reduce){.catalog-image::before,.gallery-image::before{animation:none}}
