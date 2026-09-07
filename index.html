@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="随机遇见一种美学风格，再进入形外 Index 探索它的背景与图像。">
+  <link rel="icon" href="favicon.svg?v=3">
+  <title>形外 — 随机发现一种美学</title>
+  <link rel="stylesheet" href="discovery.css?v=2">
+</head>
+<body class="discovery-page">
+  <canvas id="stage" aria-label="随机美学交互"></canvas>
+  <canvas id="glStage" aria-hidden="true"></canvas>
+
+  <header class="discovery-header">
+    <a class="discovery-brand" href="index.html" aria-label="形外随机发现"><i class="brand-sigil" aria-hidden="true"><b></b></i><span>形外</span></a>
+    <a class="catalog-entry" href="catalog.html">INDEX <span>↗</span></a>
+  </header>
+
+  <main>
+    <div class="discovery-result" id="reveal" aria-live="polite">
+      <h1 id="title"></h1>
+      <p id="titleZh"></p>
+    </div>
+    <div class="discovery-actions" id="resultActions">
+      <a id="detailLink" aria-label="查看详情" title="查看详情">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.8 12s3.3-5.2 9.2-5.2 9.2 5.2 9.2 5.2-3.3 5.2-9.2 5.2S2.8 12 2.8 12Z"></path><circle cx="12" cy="12" r="2.7"></circle></svg>
+      </a>
+      <button id="shuffle" aria-label="换一种风格" title="换一种风格">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.2 8.2A7.7 7.7 0 1 0 20 14M19.2 4.8v3.4h-3.4"></path></svg>
+      </button>
+    </div>
+  </main>
+
+  <div class="discovery-hint" id="hint">MOVE · CLICK</div>
+  <div class="pointer" id="pointer" aria-hidden="true"><svg viewBox="0 0 18 24"><path d="M1 1v18l5-5 4 8 3-2-4-8h7z"></path></svg></div>
+
+  <script src="catalog.js?v=20"></script>
+  <script src="lens-gl.js?v=1"></script>
+  <script src="discovery.js?v=1"></script>
+</body>
+</html>

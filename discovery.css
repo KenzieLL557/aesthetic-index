@@ -1,0 +1,37 @@
+:root{color-scheme:dark;--ink:#070809;--line:#272a2d;--paper:#efeee9;--muted:#7b7f84}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:var(--ink);color:var(--paper);font-family:Arial,"Helvetica Neue",sans-serif}
+body{cursor:none}
+a,button{color:inherit;cursor:none}
+#stage,#glStage{position:fixed;inset:0;width:100%;height:100%;display:block}
+#glStage{z-index:1;pointer-events:none}
+body.lens-mode #stage{visibility:hidden}
+.discovery-header{position:fixed;z-index:5;top:0;left:34px;right:34px;height:68px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;font:10px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em}
+.discovery-header a{text-decoration:none}
+.discovery-brand{display:flex;align-items:center;gap:11px}
+.discovery-brand i{width:9px;height:15px;border:1px solid currentColor;transform:skewY(-24deg)}
+.discovery-brand span{font-family:Arial,"Helvetica Neue",sans-serif;font-size:14px;font-weight:700;letter-spacing:-.04em}
+.catalog-entry{display:flex;align-items:center;gap:8px;color:#aaa}
+.catalog-entry span{font-size:12px;color:var(--paper)}
+.discovery-result{position:fixed;z-index:4;left:50%;top:50%;width:min(84vw,1100px);transform:translate(-50%,-44%);text-align:center;opacity:0;pointer-events:none;transition:opacity .55s cubic-bezier(.25,1,.5,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.discovery-result.on{opacity:1;transform:translate(-50%,-50%)}
+.discovery-result h1{margin:0;font-size:clamp(48px,8vw,126px);line-height:.88;letter-spacing:-.065em;font-weight:500;text-wrap:balance;text-shadow:0 2px 26px #000}
+.discovery-result h1 .glyph{display:inline-block;opacity:0;filter:blur(8px);transform:translateY(18px);transition:opacity .7s cubic-bezier(.25,1,.5,1),filter .9s cubic-bezier(.25,1,.5,1),transform .9s cubic-bezier(.16,1,.3,1)}
+.discovery-result.on h1 .glyph{opacity:1;filter:blur(0);transform:translateY(0)}
+.discovery-result p{margin:20px 0 0;color:#c7c7c3;font-size:13px;letter-spacing:.12em}
+.discovery-actions{position:fixed;z-index:7;left:50%;top:calc(50% + clamp(70px,9vw,145px));display:flex;gap:8px;transform:translate(-50%,18px);opacity:0;pointer-events:none;transition:opacity .42s cubic-bezier(.25,1,.5,1),transform .55s cubic-bezier(.16,1,.3,1)}
+.discovery-actions.on{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.discovery-actions a,.discovery-actions button{width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(238,237,232,.38);background:rgba(7,8,9,.58);color:var(--paper);backdrop-filter:blur(12px);transition:background .22s,border-color .22s,transform .22s}
+.discovery-actions a:hover,.discovery-actions button:hover{background:var(--paper);color:var(--ink);border-color:var(--paper);transform:translateY(-2px)}
+.discovery-actions svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.discovery-hint{position:fixed;z-index:5;right:34px;bottom:31px;color:var(--muted);font:9px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em}
+.pointer{position:fixed;z-index:20;left:0;top:0;width:18px;height:24px;pointer-events:none;transform:translate3d(-30px,-30px,0);filter:drop-shadow(0 1px 4px #000)}
+.pointer svg{width:100%;height:100%;fill:#08090a;stroke:#f2f1ec;stroke-width:1.2;stroke-linejoin:round}
+@media(max-width:640px){.discovery-header{left:18px;right:18px;height:58px}.discovery-result{width:90vw}.discovery-result h1{font-size:clamp(42px,15vw,76px)}.discovery-result p{font-size:11px}.discovery-hint{right:18px;bottom:20px}.discovery-actions{top:calc(50% + 112px)}}
+@media(prefers-reduced-motion:reduce){.discovery-result,.discovery-result h1 .glyph,.discovery-actions{transition:none}.discovery-hint{display:none}}
+
+/* Unified identity mark */
+.discovery-brand .brand-sigil{position:relative;width:19px;height:19px;border:0;transform:rotate(-2deg);flex:0 0 19px}
+.discovery-brand .brand-sigil::before,.discovery-brand .brand-sigil::after{content:'';position:absolute;width:10px;height:14px;background:currentColor;clip-path:polygon(0 18%,100% 0,100% 82%,0 100%)}
+.discovery-brand .brand-sigil::before{left:0;top:0}.discovery-brand .brand-sigil::after{right:0;bottom:0}
+.discovery-brand .brand-sigil b{position:absolute;left:8px;top:7px;width:4px;height:6px;background:#080a09;clip-path:polygon(0 18%,100% 0,100% 82%,0 100%);z-index:1}
